@@ -5,24 +5,29 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 
-let user = new Schema({
+let jobs = new Schema({
 
-    name: {
+    title: {
         type: String
     },
-    password: {
+    description: {
         type: String
     },
-    email: {
+    skills: {
+        type: Array
+    },
+    companyMail: {
         type: String
     },
-    mobileNumber: {
+    experience: {
         type: Number
     },
     userId: {
         type: String
+    },
+    name: {
+        type: String
     }
 })
 
-mongoose.model('User', user)
-
+mongoose.model('Jobs', jobs)

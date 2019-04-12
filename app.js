@@ -1,5 +1,5 @@
 // Internal Module
-const fs = require('fs') 
+const fs = require('fs')
 
 const appConfig = require('./config/appConfig')
 
@@ -8,10 +8,13 @@ const mongoose = require('mongoose')
 const express = require('express')
 const bodyparser = require('body-parser')
 
+const usersRoutes = require('./routes/users')
+const jobsRoutes = require('./routes/jobs')
+const commonRoutes = require('./routes/commonRoutes')
 
-const schema = require('./graphql/schema')
-const root = require('./graphql/resolvers')
-var graphqlHTTP = require('express-graphql');
+// const schema = require('./graphql/schema')
+// const root = require('./graphql/resolvers')
+// var graphqlHTTP = require('express-graphql');
 
 const app = express();
 
@@ -36,11 +39,10 @@ app.use((req, res, next) => {
     next();
 })
 
-app.use('/graphql', graphqlHTTP({
-    schema: schema.schema,
-    rootValue: root.root,
-    graphiql: true,
-}));
+app.use('/user', usersRoutes)
+app.use('/jobs', jobsRoutes)
+app.use('/common', commonRoutes)
+
 
 app.listen(appConfig.port, () => {
 

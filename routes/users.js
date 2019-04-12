@@ -4,6 +4,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const shortid = require('shortid')
 
 const router = express.Router()
 
@@ -15,45 +16,32 @@ const checkAuth = require('../middleware/check-auth')
 const UserModel = mongoose.model('User')
 // const LocationDB = mongoose.model('EdeLocationDB')
 
-// localhost:3000/api/user/
-router.get('/', (req, res) => {
-
-    res.send('this is router express')
-})
-
-
-
-// localhost:3000/api/user/login
-
 
 // localhost:3000/user/signup
 router.post('/signup', (req, res) => {
 
-
-    UserModel.findOne({ userName: req.body.userName }).then(result => {
-
-        console.log('RESULT', result);
-
+    UserModel.findOne({ email: req.body.email }).then(result => {
         if (!result) {
 
             bcryptjs.hash(req.body.password, 10).then(hash => {
 
-                console.log('HASH', hash)
                 let userDetails = new UserModel({
-                    userName: req.body.userName,
-                    password: hash
+                    email: req.body.email,
+                    password: hash,
+                    name: req.body.name,
+                    mobileNumber: req.body.mobileNumber,
+                    userId: shortid.generate()
                 })
+                console.log('HASH', userDetails)
 
                 userDetails.save((err, result) => {
                     if (err) {
-                        // res.send(err)
                         res.status(500).json({
                             message: 'Unable to create user',
                             result: null,
                             error: err
                         })
                     } else {
-                        //res.send(result)
                         res.status(200).json({
                             message: 'User Created Successfully',
                             result: result,
@@ -69,7 +57,6 @@ router.post('/signup', (req, res) => {
                 })
             })
         } else {
-            // res.send('User already exist')
             res.status(500).json({
                 message: 'User Already exist',
                 result: null,
@@ -95,11 +82,9 @@ router.post('/signup', (req, res) => {
 
 router.post('/login', (req, res) => {
     let userDetails
-    UserModel.findOne({ userName: req.body.userName }).then(user => {
+    UserModel.findOne({ email: req.body.email }).then(user => {
         userDetails = user
         if (!user) {
-
-
             let resObj = {
                 message: 'No User Found',
                 status: 404,
@@ -113,8 +98,6 @@ router.post('/login', (req, res) => {
 
         bcryptjs.compare(req.body.password, user.password).then(isMatch => {
             if (!isMatch) {
-
-
                 let resObj = {
                     message: 'Password incorrect',
                     status: 404,
@@ -126,8 +109,8 @@ router.post('/login', (req, res) => {
                 return res.send(resObj)
             }
 
-
-            let token = jwt.sign({ userName: userDetails.userName, userId: userDetails._id },
+m
+            let token = jwt.sign({ name: userDetails.name, userId: userDetails._id },
                 'thisissecretkeyanditisverylong')
 
             if (token) {
@@ -160,25 +143,6 @@ router.post('/login', (req, res) => {
 })
 
 
-
-// router.post('/save-countries',checkAuth, (req, res) => {
-
-// let locDetails = new LocationDB({
-//     countryName: req.body.countryName,
-//     countryCode: req.body.countryCode,
-//     countryLanguage: req.body.countryLanguage
-// })
-
-
-// locDetails.save((err, result) => {
-//     if(err) {
-// res.send(err)
-//     } else {
-//         res.send(result)
-
-//     }
-// })
-// })
 
 
 

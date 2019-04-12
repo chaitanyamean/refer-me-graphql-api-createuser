@@ -17,6 +17,7 @@
     "grpc": "^1.11.3",
     "jsonwebtoken": "^8.4.0",
     "mongodb": "^3.2.2",
-    "mongoose": "^5.4.5"
+    "mongoose": "^5.4.5",
+    "shortid": "^2.2.14"
   }
 }
