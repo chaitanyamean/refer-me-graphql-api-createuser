@@ -18,7 +18,6 @@ router.get('/getAllJobs', (req, res) => {
 })
 
 router.get('/getAllUsers', (req, res) => {
-
     UserModel.find().then(result => {
         return res.send(result)
     })

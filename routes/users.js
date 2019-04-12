@@ -96,6 +96,7 @@ router.post('/login', (req, res) => {
             return res.send(resObj)
         }
 
+
         bcryptjs.compare(req.body.password, user.password).then(isMatch => {
             if (!isMatch) {
                 let resObj = {
@@ -109,7 +110,6 @@ router.post('/login', (req, res) => {
                 return res.send(resObj)
             }
 
-m
             let token = jwt.sign({ name: userDetails.name, userId: userDetails._id },
                 'thisissecretkeyanditisverylong')
 
