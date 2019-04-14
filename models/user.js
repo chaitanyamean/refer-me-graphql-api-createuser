@@ -21,6 +21,9 @@ let user = new Schema({
     },
     userId: {
         type: String
+    },
+    isAdmin: {
+        type: Boolean
     }
 })
 

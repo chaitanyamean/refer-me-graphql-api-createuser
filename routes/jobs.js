@@ -15,7 +15,9 @@ router.post('/addjobs', (req, res) => {
         companyMail: req.body.companyMail,
         experience: req.body.experience,
         userId: req.body.userId,
-        name: req.body.name
+        name: req.body.name,
+        city: req.body.city,
+        isApproved: req.body.isApproved
     })
 
     console.log(addjob)

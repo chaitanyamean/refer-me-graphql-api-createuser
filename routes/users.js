@@ -30,7 +30,8 @@ router.post('/signup', (req, res) => {
                     password: hash,
                     name: req.body.name,
                     mobileNumber: req.body.mobileNumber,
-                    userId: shortid.generate()
+                    userId: shortid.generate(),
+                    isAdmin: req.body.isAdmin
                 })
                 console.log('HASH', userDetails)
 

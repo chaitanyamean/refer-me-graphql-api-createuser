@@ -1,4 +1,3 @@
-// {username: "admin", password: "1234"}\\
 
 const mongoose = require('mongoose')
 
@@ -22,11 +21,17 @@ let jobs = new Schema({
     experience: {
         type: Number
     },
+    city: {
+        type: String
+    },
     userId: {
         type: String
     },
     name: {
         type: String
+    },
+    isApproved: {
+        type: Boolean
     }
 })
 
